@@ -1,0 +1,16 @@
+<html ng-app="volunteerapp">
+<head>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="js/vendor/angular.min.js"></script>
+	<script src="js/controller.js"></script>
+</head>
+<body ng-controller="VolunteerListCtrl">
+	<h1>Volunteers</h1>
+	<ul>
+		<li ng-repeat="volunteer in volunteers">
+	      	{{volunteer.FirstName}}
+	      	{{volunteer.LastName}}
+    	</li>
+	</ul>
+</body>
+</html>
