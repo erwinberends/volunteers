@@ -1,4 +1,5 @@
 var express = require('express');
+var https = require('https');
 var app = express();
 
 app.get('/', function(req, res){
@@ -10,21 +11,37 @@ app.get("/js/*",function(req,res){
 });
 
 app.get('/api/volunteers', function(req, res){
-	var volunteers = getVolunteers();
-	res.json(volunteers);
+	loadVolunteers(function(volunteers){
+		res.json(volunteers);	
+	});
 });
 
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 })
 
-function getVolunteers(){
-	return [new Volunteer('Erwin', 'Berends', 'erwin@taiga.nl'),
-			new Volunteer('Denise', 'Elizen', 'denise_elizen@hotmail.com')];
-}
+function loadVolunteers(callback){
+	var options = {
+    	host : 'vrijwilligersadministratie.azure-mobile.net',
+    	path : '/tables/volunteer',
+    	method : 'GET',
+    	headers :  {'X-ZUMO-APPLICATION' : 'aqvTfJISTYrMBsmTwAWisPBZelqKLC24'}
+	};
+	var volunteers;
 
-function Volunteer(firstName, lastName, email){
-	this.FirstName = firstName;
-	this.LastName = lastName;
-	this.EMail = email;
-}
+	var req = https.request(options, function(res) {
+  		console.log("statusCode: ", res.statusCode);
+  		console.log("headers: ", res.headers);
+
+  		res.on('data', function(data) {
+    		process.stdout.write(data);
+    		callback(JSON.parse(data));
+  		});
+	});
+	req.end();
+
+	req.on('error', function(e) {
+  		console.error(e);
+	});
+
+};
