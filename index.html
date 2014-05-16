@@ -3,16 +3,25 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="js/vendor/angular.min.js"></script>
 	<script src="js/controller.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.3.min.js"></script>
 </head>
-<body ng-controller="VolunteerListCtrl">
+<body ng-controller="VolunteerController">
+	<article>
 	<h1>Volunteers</h1>
 	<ul>
 		<li ng-repeat="volunteer in volunteers">
-	      	{{volunteer.firstname}}
-	      	{{volunteer.lastname}}
+	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}}
     	</li>
 	</ul>
-</div>
+	</article>
+	<article ng-controller="VolunteerController">
+		<h1>Add volunteer</h1>
+		<form novalidate class="simple-form">
+    		Voornaam: <input type="text" ng-model="volunteer.firstname" /><br />
+    		Achternaam: <input type="text" ng-model="volunteer.lastname" /><br />
+    		Email: <input type="text" ng-model="volunteer.email" /><br />
+        	<button ng-click="reset()">RESET</button>
+    		<button ng-click="update(volunteer)">SAVE</button>
+  		</form>
+	</article>
 </body>
 </html>
