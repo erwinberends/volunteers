@@ -9,7 +9,9 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
     $scope.save = function() {
     	$http.post('api/volunteer/create', JSON.stringify($scope.volunteer))
     	.success(function(data){
+    		$scope.volunteer.id = data.id;
     		$scope.volunteers.push($scope.volunteer);
+    		$scope.volunteer = null;
     	});
     };
 });
