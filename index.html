@@ -13,14 +13,13 @@
     	</li>
 	</ul>
 	</article>
-	<article ng-controller="VolunteerController">
+	<article>
 		<h1>Add volunteer</h1>
 		<form novalidate class="simple-form">
     		Voornaam: <input type="text" ng-model="volunteer.firstname" /><br />
     		Achternaam: <input type="text" ng-model="volunteer.lastname" /><br />
     		Email: <input type="text" ng-model="volunteer.email" /><br />
-        	<button ng-click="reset()">RESET</button>
-    		<button ng-click="update(volunteer)">SAVE</button>
+    		<button ng-click="save()">SAVE</button>
   		</form>
 	</article>
 </body>

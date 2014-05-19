@@ -6,7 +6,10 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         	$scope.volunteers = data;
     	});
 
-    $scope.update = function(volunteer) {
-    	$http.post('api/volunteer/create', JSON.stringify(volunteer));
+    $scope.save = function() {
+    	$http.post('api/volunteer/create', JSON.stringify($scope.volunteer))
+    	.success(function(data){
+    		$scope.volunteers.push($scope.volunteer);
+    	});
     };
 });

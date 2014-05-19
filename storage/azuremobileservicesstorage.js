@@ -1,6 +1,6 @@
 var https = require('https');
 
-exports.createVolunteer = function createVolunteer(volunteer, callback){
+exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailure){
 
 	var volunteerString = JSON.stringify(volunteer);
 
@@ -18,13 +18,20 @@ exports.createVolunteer = function createVolunteer(volunteer, callback){
 	};
 	
 	var req = https.request(options, function(res) {
+		res.on('data', function(data){
+			onSuccess(data);
+		});
 	});
+
+	req.on('error', function(e){
+		onFailure(e);
+	})
 
 	req.write(volunteerString);
 	req.end();
 }
 
-exports.loadAllVolunteers = function loadAllVolunteers(callback){
+exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
 	var options = {
     	host : 'vrijwilligersadministratie.azure-mobile.net',
     	path : '/tables/volunteer',
@@ -35,12 +42,12 @@ exports.loadAllVolunteers = function loadAllVolunteers(callback){
 
 	var req = https.request(options, function(res) {
   		res.on('data', function(data) {
-    		callback(JSON.parse(data));
+    		onSuccess(JSON.parse(data));
   		});
 	});
 	req.end();
 
 	req.on('error', function(e) {
-  		console.error(e);
+  		onFailure(e);
 	});
 };
