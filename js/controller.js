@@ -13,7 +13,10 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         		$scope.volunteer.id = data.id;
         		$scope.volunteers.push($scope.volunteer);
         		$scope.volunteer = null;
-        	});
+        	})
+            .error(function(data){
+                alert('Error while saving volunteer');
+            });
         }
         else{
             $http.post('api/volunteer/update', JSON.stringify($scope.volunteer))
