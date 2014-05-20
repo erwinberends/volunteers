@@ -32,7 +32,7 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         $http.post('api/volunteer/delete', JSON.stringify(volunteer))
         .success(function(data){
             var index=$scope.volunteers.indexOf(volunteer);
-            $scope.volunteers.splice(index,1);
+            $scope.volunteers.splice(index,1);     
         });
     }
 });

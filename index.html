@@ -15,13 +15,14 @@
 	</article>
 	<article>
 		<h1>Add volunteer</h1>
-		<form novalidate class="simple-form">
-    		Voornaam: <input type="text" ng-model="volunteer.firstname" /><br />
-    		Achternaam: <input type="text" ng-model="volunteer.lastname" /><br />
-    		Email: <input type="text" ng-model="volunteer.email" /><br />
+		<form novalidate class="simple-form" name="volunteerform">
+    		Voornaam: <input type="text" ng-model="volunteer.firstname" required/><br />
+    		Achternaam: <input type="text" ng-model="volunteer.lastname" required/><br />
+    		Email: <input type="email" ng-model="volunteer.email" required/><br />
 
-    		<button ng-click="save()">SAVE</button>
+    		<button ng-click="save()" ng-disabled="volunteerform.$invalid">Save</button>
   		</form>
+  		<div> Whole form valid? {{volunteerform.$valid}} </div>
 	</article>
 </body>
 </html>
