@@ -19,13 +19,28 @@ app.get('/api/volunteers', function(req, res){
 	},
 	function(e){
 		res.status(500, e)
-		
 	});
 });
 
 app.post('/api/volunteer/create', function(req, res){
 	storage.createVolunteer(req.body, function(volunteer){
 		res.json(JSON.parse(volunteer));
+	}, function(e){
+		res.status(500).send(e);
+	});
+});
+
+app.post('/api/volunteer/update', function(req, res){
+	storage.updateVolunteer(req.body, function(volunteer){
+		res.json(JSON.parse(volunteer));
+	}, function(e){
+		res.status(500).send(e);
+	});
+});
+
+app.post('/api/volunteer/delete', function(req, res){
+	storage.deleteVolunteer(req.body, function(){
+		res.status(200).send();
 	}, function(e){
 		res.status(500).send(e);
 	});

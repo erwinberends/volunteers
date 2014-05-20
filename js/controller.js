@@ -7,11 +7,32 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
     	});
 
     $scope.save = function() {
-    	$http.post('api/volunteer/create', JSON.stringify($scope.volunteer))
-    	.success(function(data){
-    		$scope.volunteer.id = data.id;
-    		$scope.volunteers.push($scope.volunteer);
-    		$scope.volunteer = null;
-    	});
+        if($scope.volunteer.id === undefined){
+        	$http.post('api/volunteer/create', JSON.stringify($scope.volunteer))
+        	.success(function(data){
+        		$scope.volunteer.id = data.id;
+        		$scope.volunteers.push($scope.volunteer);
+        		$scope.volunteer = null;
+        	});
+        }
+        else{
+            $http.post('api/volunteer/update', JSON.stringify($scope.volunteer))
+            .success(function(data){
+                $scope.volunteer = null;
+            });
+        }
+
     };
+
+    $scope.editVolunteer = function(volunteer){
+        $scope.volunteer = volunteer; 
+    }
+
+    $scope.deleteVolunteer = function(volunteer){
+        $http.post('api/volunteer/delete', JSON.stringify(volunteer))
+        .success(function(data){
+            var index=$scope.volunteers.indexOf(volunteer);
+            $scope.volunteers.splice(index,1);
+        });
+    }
 });

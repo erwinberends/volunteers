@@ -9,7 +9,7 @@
 	<h1>Volunteers</h1>
 	<ul>
 		<li ng-repeat="volunteer in volunteers">
-	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}}
+	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)">Edit</a> - <a data-toggle="edit" ng-click="deleteVolunteer(volunteer)">Delete</a>
     	</li>
 	</ul>
 	</article>
@@ -19,6 +19,7 @@
     		Voornaam: <input type="text" ng-model="volunteer.firstname" /><br />
     		Achternaam: <input type="text" ng-model="volunteer.lastname" /><br />
     		Email: <input type="text" ng-model="volunteer.email" /><br />
+
     		<button ng-click="save()">SAVE</button>
   		</form>
 	</article>
