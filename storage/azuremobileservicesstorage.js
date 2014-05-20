@@ -2,6 +2,7 @@ var https = require('https');
 
 var applicationKey = 'aqvTfJISTYrMBsmTwAWisPBZelqKLC24';
 var baseUrl = 'vrijwilligersadministratie.azure-mobile.net';
+
 exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailure){
 	var volunteerString = JSON.stringify(volunteer);
 
@@ -19,8 +20,15 @@ exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailu
 	};
 	
 	var req = https.request(options, function(res) {
+		res.setEncoding('utf8');
 		res.on('data', function(data){
-			onSuccess(data);
+			var result = JSON.parse(data);
+			if(result.code === 400){
+				onFailure(data);
+			}
+			else{
+				onSuccess(data);
+			}
 		});
 	});
 
@@ -52,8 +60,8 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
 	
 	var req = https.request(options, function(res) {
 		res.on('data', function(data){
-			onSuccess(data);
-		});
+	        onSuccess(data);
+	    });
 	});
 
 	req.on('error', function(e){

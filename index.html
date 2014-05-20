@@ -15,6 +15,7 @@
 	</article>
 	<article>
 		<h1>Add volunteer</h1>
+		<div>Volunteer valid? {{volunteerform.$valid}} </div>
 		<form novalidate class="simple-form" name="volunteerform">
     		Voornaam: <input type="text" ng-model="volunteer.firstname" required/><br />
     		Achternaam: <input type="text" ng-model="volunteer.lastname" required/><br />
@@ -22,7 +23,6 @@
 
     		<button ng-click="save()" ng-disabled="volunteerform.$invalid">Save</button>
   		</form>
-  		<div> Whole form valid? {{volunteerform.$valid}} </div>
 	</article>
 </body>
 </html>
