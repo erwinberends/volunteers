@@ -3,6 +3,16 @@ var https = require('https');
 var applicationKey = 'aqvTfJISTYrMBsmTwAWisPBZelqKLC24';
 var baseUrl = 'vrijwilligersadministratie.azure-mobile.net';
 
+function createOptions(headers, method, path){
+	var options = {
+    	host : baseUrl,
+    	path : path,
+    	method : method,
+    	headers :  headers
+	};
+	return options;
+}
+
 exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailure){
 	var volunteerString = JSON.stringify(volunteer);
 
@@ -12,12 +22,7 @@ exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailu
   		'X-ZUMO-APPLICATION' : applicationKey
 	};
 
-	var options = {
-    	host : baseUrl,
-    	path : '/tables/volunteer',
-    	method : 'POST',
-    	headers :  headers
-	};
+	var options = createOptions(headers, 'POST', '/tables/volunteer');
 	
 	var req = https.request(options, function(res) {
 		res.setEncoding('utf8');
@@ -51,12 +56,7 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
   		'X-ZUMO-APPLICATION' : applicationKey
 	};
 
-	var options = {
-    	host : baseUrl,
-    	path : '/tables/volunteer/' + volunteer.id,
-    	method : 'PATCH',
-    	headers :  headers
-	};
+	var options = createOptions(headers, 'PATCH', '/tables/volunteer/' + volunteer.id);
 	
 	var req = https.request(options, function(res) {
 		res.on('data', function(data){
@@ -77,12 +77,7 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
   		'X-ZUMO-APPLICATION' : applicationKey
 	};
 
-	var options = {
-    	host : baseUrl,
-    	path : '/tables/volunteer/' + volunteer.id,
-    	method : 'DELETE',
-    	headers :  headers
-	};
+	var options = createOptions(headers, 'DELETE', '/tables/volunteer/' + volunteer.id)
 	
 	var req = https.request(options, function(res) {
 		var response = "";
@@ -103,26 +98,23 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
 	req.on('error', function(e){
 		onFailure(e);
 	});
+	
 	req.end();
 }
 
 exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
-	var options = {
-    	host : baseUrl,
-    	path : '/tables/volunteer',
-    	method : 'GET',
-    	headers :  {'X-ZUMO-APPLICATION' : 'aqvTfJISTYrMBsmTwAWisPBZelqKLC24'}
-	};
-	var volunteers;
+	var headers = {'X-ZUMO-APPLICATION' : applicationKey};
+
+	var options = createOptions(headers, 'GET', '/tables/volunteer');
 
 	var req = https.request(options, function(res) {
   		res.on('data', function(data) {
     		onSuccess(JSON.parse(data));
   		});
 	});
-	req.end();
-
+	
 	req.on('error', function(e) {
   		onFailure(e);
 	});
+	req.end();
 };
