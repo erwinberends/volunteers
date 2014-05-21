@@ -10,6 +10,8 @@
 	<ul>
 		<li ng-repeat="volunteer in volunteers">
 	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)">Edit</a> - <a data-toggle="edit" ng-click="deleteVolunteer(volunteer)">Delete</a>
+    		Tags: <span ng-repeat="tag in volunteer.tags" style="background-color: {{tag.color}}">{{tag.name}}</span>
+
     	</li>
 	</ul>
 	</article>
@@ -20,7 +22,6 @@
     		Voornaam: <input type="text" ng-model="volunteer.firstname" required/><br />
     		Achternaam: <input type="text" ng-model="volunteer.lastname" required/><br />
     		Email: <input type="email" ng-model="volunteer.email" required/><br />
-
     		<button ng-click="save()" ng-disabled="volunteerform.$invalid">Save</button>
   		</form>
 	</article>

@@ -18,7 +18,7 @@ app.get('/api/volunteers', function(req, res){
 		res.json(volunteers);	
 	},
 	function(e){
-		res.status(500, e)
+		res.status(500, e);
 	});
 });
 
@@ -43,6 +43,15 @@ app.post('/api/volunteer/delete', function(req, res){
 		res.status(200).send();
 	}, function(e){
 		res.status(500).send(e);
+	});
+});
+
+app.get('/api/tags', function(req, res){
+	storage.loadAllTags(function(tags){
+		res.json(tags);	
+	},
+	function(e){
+		res.status(500, e);
 	});
 });
 

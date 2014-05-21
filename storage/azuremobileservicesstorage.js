@@ -105,7 +105,7 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
 exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
 	var headers = {'X-ZUMO-APPLICATION' : applicationKey};
 
-	var options = createOptions(headers, 'GET', '/tables/volunteer');
+	var options = createOptions(headers, 'GET', '/api/volunteers');
 
 	var req = https.request(options, function(res) {
   		res.on('data', function(data) {
@@ -117,4 +117,8 @@ exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
   		onFailure(e);
 	});
 	req.end();
-};
+}
+
+exports.loadAllTags = function loadAllTags(onSuccess, onFailure){
+	
+}
