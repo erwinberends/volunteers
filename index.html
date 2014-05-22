@@ -9,9 +9,13 @@
 	<h1>Volunteers</h1>
 	<ul>
 		<li ng-repeat="volunteer in volunteers">
-	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)">Edit</a> - <a data-toggle="edit" ng-click="deleteVolunteer(volunteer)">Delete</a>
-    		Tags: <span ng-repeat="tag in volunteer.tags" style="background-color: {{tag.color}}">{{tag.name}}</span>
-
+	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)">Edit</a> - <a ng-click="deleteVolunteer(volunteer)">Delete</a>
+    		Tags: 
+			<a ng-click="showTags = !showTags">Add tags</a>
+			<ul ng-show="showTags">
+				<li ng-repeat="tag in tags" ng-click="addTag(tag, volunteer)">{{tag.name}}</li>
+			</ul>
+    		<span ng-repeat="tag in volunteer.tags" style="background-color: {{tag.color}}">{{tag.name}}</span>
     	</li>
 	</ul>
 	</article>

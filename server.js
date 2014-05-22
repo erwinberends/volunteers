@@ -14,7 +14,7 @@ app.get('/js/*',function(req,res){
 });
 
 app.get('/api/volunteers', function(req, res){
-	storage.loadAllVolunteers(function(volunteers){
+		storage.loadAllVolunteers(function(volunteers){
 		res.json(volunteers);	
 	},
 	function(e){
@@ -23,17 +23,19 @@ app.get('/api/volunteers', function(req, res){
 });
 
 app.post('/api/volunteer/create', function(req, res){
-	storage.createVolunteer(req.body, function(volunteer){
+		storage.createVolunteer(req.body, function(volunteer){
 		res.json(JSON.parse(volunteer));
-	}, function(e){
+	}, 
+	function(e){
 		res.status(500).send(e);
 	});
 });
 
 app.post('/api/volunteer/update', function(req, res){
-	storage.updateVolunteer(req.body, function(volunteer){
+		storage.updateVolunteer(req.body, function(volunteer){
 		res.json(JSON.parse(volunteer));
-	}, function(e){
+	}, 
+	function(e){
 		res.status(500).send(e);
 	});
 });
@@ -41,13 +43,23 @@ app.post('/api/volunteer/update', function(req, res){
 app.post('/api/volunteer/delete', function(req, res){
 	storage.deleteVolunteer(req.body, function(){
 		res.status(200).send();
-	}, function(e){
+	}, 
+	function(e){
 		res.status(500).send(e);
 	});
 });
 
+app.post('/api/volunteer/addtag', function(req, res){
+	storage.addTag(req.body, function(){
+		res.status(200).send();
+	}, 
+	function(e){
+		res.status(500).send(e);
+	});
+})
+
 app.get('/api/tags', function(req, res){
-	storage.loadAllTags(function(tags){
+		storage.loadAllTags(function(tags){
 		res.json(tags);	
 	},
 	function(e){

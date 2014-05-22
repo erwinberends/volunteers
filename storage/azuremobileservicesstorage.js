@@ -32,6 +32,7 @@ exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailu
 				onFailure(data);
 			}
 			else{
+				console.log(data);
 				onSuccess(data);
 			}
 		});
@@ -120,5 +121,54 @@ exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
 }
 
 exports.loadAllTags = function loadAllTags(onSuccess, onFailure){
+	var headers = {'X-ZUMO-APPLICATION' : applicationKey};
+
+	var options = createOptions(headers, 'GET', '/tables/tag');
+
+	var req = https.request(options, function(res) {
+  		res.on('data', function(data) {
+    		onSuccess(JSON.parse(data));
+  		});
+	});
 	
+	req.on('error', function(e) {
+  		onFailure(e);
+	});
+	req.end();
+}
+
+exports.addTag = function AddTag(volunteerTag, onSuccess, onFailure){
+	var volunteerTagToSend = new Object();
+	volunteerTagToSend.volunteer = volunteerTag.volunteerid;
+	volunteerTagToSend.tag = volunteerTag.tagid;
+	var volunteerTagString = JSON.stringify(volunteerTagToSend);
+
+	var headers = {
+  		'Content-Type': 'application/json',
+  		'Content-Length': volunteerTagString.length,
+  		'X-ZUMO-APPLICATION' : applicationKey
+	};
+
+	var options = createOptions(headers, 'POST', '/tables/volunteertag');
+	
+	var req = https.request(options, function(res) {
+		res.setEncoding('utf8');
+		res.on('data', function(data){
+			var result = JSON.parse(data);
+			if(result.code === 400){
+				onFailure(data);
+			}
+			else{
+				console.log(data);
+				onSuccess(data);
+			}
+		});
+	});
+
+	req.on('error', function(e){
+		onFailure(e);
+	})
+
+	req.write(volunteerTagString);
+	req.end();
 }

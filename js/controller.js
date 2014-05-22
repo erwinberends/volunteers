@@ -5,6 +5,11 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
 		.success(function(data){
         	$scope.volunteers = data;
     	});
+    $http.get('api/tags')
+        .success(function(data){
+            $scope.tags = data;
+        });
+
 
     $scope.save = function() {
         if($scope.volunteer.id === undefined){
@@ -26,6 +31,17 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         }
 
     };
+
+    $scope.addTag = function(tag, volunteer){
+        var volunteertag = new Object();
+        volunteertag.volunteerid = volunteer.id;
+        volunteertag.tagid = tag.id;
+        $http.post('api/volunteer/addtag', JSON.stringify(volunteertag))
+        .success(function(data){
+            volunteer.tags.push(tag);
+        });
+        
+    }
 
     $scope.editVolunteer = function(volunteer){
         $scope.volunteer = volunteer; 
