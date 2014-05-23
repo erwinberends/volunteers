@@ -129,7 +129,7 @@ exports.loadAllTags = function loadAllTags(onSuccess, onFailure){
 	req.end();
 }
 
-exports.addTag = function AddTag(volunteerTag, onSuccess, onFailure){
+exports.addTag = function addTag(volunteerTag, onSuccess, onFailure){
 	var volunteerTagToSend = new Object();
 	volunteerTagToSend.volunteer = volunteerTag.volunteerid;
 	volunteerTagToSend.tag = volunteerTag.tagid;
@@ -152,5 +152,29 @@ exports.addTag = function AddTag(volunteerTag, onSuccess, onFailure){
 	})
 
 	req.write(volunteerTagString);
+	req.end();
+}
+
+exports.removeTag = function deleteVolunteer(query, onSuccess, onFailure){
+	var headers = {
+  		'X-ZUMO-APPLICATION' : applicationKey
+	};
+
+	var options = createOptions(headers, 'DELETE', '/api/volunteertag?volunteerid=' + query.volunteerid + '&tagid=' + query.tagid)
+	
+	var req = https.request(options, function(res) {
+		handleResult(res, onSuccess, onFailure);
+
+	    // This never happens
+	    res.on('end', function(){
+	        console.log("End received!");
+	        onSuccess();
+	    });
+	});
+
+	req.on('error', function(e){
+		onFailure(e);
+	});
+	
 	req.end();
 }

@@ -43,10 +43,10 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
     }
 
     $scope.removeTag = function(tag, volunteer){
-        var volunteertag = new Object();
-        volunteertag.volunteerid = volunteer.id;
-        volunteertag.tagid = tag.id;
-        $http.post('api/volunteer/remove', JSON.stringify(volunteertag))
+        var query = new Object();
+        query.volunteerid = volunteer.id;
+        query.tagid = tag.id;
+        $http.post('api/volunteer/removetag', JSON.stringify(query))
         .success(function(data){
             var index = volunteer.tags.indexOf(tag);
             if (index > -1) {

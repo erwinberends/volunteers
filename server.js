@@ -60,7 +60,7 @@ app.post('/api/volunteer/addtag', function(req, res){
 
 app.post('/api/volunteer/removetag', function(req, res){
 	storage.removeTag(req.body, function(){
-		rest.status(200).send();
+		res.status(200).send();
 	},
 		function(e){
 			res.status(500).send();
