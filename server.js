@@ -56,7 +56,16 @@ app.post('/api/volunteer/addtag', function(req, res){
 	function(e){
 		res.status(500).send(e);
 	});
-})
+});
+
+app.post('/api/volunteer/removetag', function(req, res){
+	storage.removeTag(req.body, function(){
+		rest.status(200).send();
+	},
+		function(e){
+			res.status(500).send();
+	});
+});
 
 app.get('/api/tags', function(req, res){
 		storage.loadAllTags(function(tags){

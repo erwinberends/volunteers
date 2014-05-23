@@ -40,7 +40,19 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         .success(function(data){
             volunteer.tags.push(tag);
         });
-        
+    }
+
+    $scope.removeTag = function(tag, volunteer){
+        var volunteertag = new Object();
+        volunteertag.volunteerid = volunteer.id;
+        volunteertag.tagid = tag.id;
+        $http.post('api/volunteer/remove', JSON.stringify(volunteertag))
+        .success(function(data){
+            var index = volunteer.tags.indexOf(tag);
+            if (index > -1) {
+                volunteer.tags.splice(index, 1);
+            }
+        });
     }
 
     $scope.editVolunteer = function(volunteer){
