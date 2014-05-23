@@ -24,7 +24,7 @@ app.get('/api/volunteers', function(req, res){
 
 app.post('/api/volunteer/create', function(req, res){
 		storage.createVolunteer(req.body, function(volunteer){
-		res.json(JSON.parse(volunteer));
+		res.json(volunteer);
 	}, 
 	function(e){
 		res.status(500).send(e);

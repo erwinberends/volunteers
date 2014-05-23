@@ -52,6 +52,9 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         .success(function(data){
             var index=$scope.volunteers.indexOf(volunteer);
             $scope.volunteers.splice(index,1);     
+        })
+        .error(function(data){
+                alert('Error while deleting volunteer');
         });
     }
 });

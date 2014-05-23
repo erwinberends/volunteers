@@ -13,6 +13,20 @@ function createOptions(headers, method, path){
 	return options;
 }
 
+function handleResult(res, onSuccess, onFailure){
+	res.setEncoding('utf8');
+	res.on('data', function(data){
+		var result = JSON.parse(data);
+		if(result.code === 400){
+			onFailure(data);
+		}
+		else{
+			console.log(data);
+			onSuccess(result);
+		}
+	});
+}
+
 exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailure){
 	var volunteerString = JSON.stringify(volunteer);
 
@@ -25,17 +39,7 @@ exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailu
 	var options = createOptions(headers, 'POST', '/tables/volunteer');
 	
 	var req = https.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function(data){
-			var result = JSON.parse(data);
-			if(result.code === 400){
-				onFailure(data);
-			}
-			else{
-				console.log(data);
-				onSuccess(data);
-			}
-		});
+		handleResult(res, onSuccess, onFailure);
 	});
 
 	req.on('error', function(e){
@@ -60,9 +64,7 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
 	var options = createOptions(headers, 'PATCH', '/tables/volunteer/' + volunteer.id);
 	
 	var req = https.request(options, function(res) {
-		res.on('data', function(data){
-	        onSuccess(data);
-	    });
+		handleResult(res, onSuccess, onFailure);
 	});
 
 	req.on('error', function(e){
@@ -81,13 +83,7 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
 	var options = createOptions(headers, 'DELETE', '/tables/volunteer/' + volunteer.id)
 	
 	var req = https.request(options, function(res) {
-		var response = "";
-    	res.setEncoding('utf8');
-
-	    res.on('data', function(chunk){
-	        console.log("INFO: "+chunk);
-	        response += chunk;
-	    });
+		handleResult(res, onSuccess, onFailure);
 
 	    // This never happens
 	    res.on('end', function(){
@@ -109,9 +105,7 @@ exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
 	var options = createOptions(headers, 'GET', '/api/volunteers');
 
 	var req = https.request(options, function(res) {
-  		res.on('data', function(data) {
-    		onSuccess(JSON.parse(data));
-  		});
+  		handleResult(res, onSuccess, onFailure);
 	});
 	
 	req.on('error', function(e) {
@@ -126,9 +120,7 @@ exports.loadAllTags = function loadAllTags(onSuccess, onFailure){
 	var options = createOptions(headers, 'GET', '/tables/tag');
 
 	var req = https.request(options, function(res) {
-  		res.on('data', function(data) {
-    		onSuccess(JSON.parse(data));
-  		});
+  		handleResult(res, onSuccess, onFailure);
 	});
 	
 	req.on('error', function(e) {
@@ -152,17 +144,7 @@ exports.addTag = function AddTag(volunteerTag, onSuccess, onFailure){
 	var options = createOptions(headers, 'POST', '/tables/volunteertag');
 	
 	var req = https.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function(data){
-			var result = JSON.parse(data);
-			if(result.code === 400){
-				onFailure(data);
-			}
-			else{
-				console.log(data);
-				onSuccess(data);
-			}
-		});
+		handleResult(res, onSuccess, onFailure);
 	});
 
 	req.on('error', function(e){
