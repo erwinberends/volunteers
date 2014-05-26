@@ -16,7 +16,14 @@ function createOptions(headers, method, path){
 function handleResult(res, onSuccess, onFailure){
 	res.setEncoding('utf8');
 	res.on('data', function(data){
-		var result = JSON.parse(data);
+		try{
+			var result = JSON.parse(data);
+		}
+		catch(e){
+			console.log(e);
+			onFailure(e);
+		}
+
 		if(result.code === 400){
 			onFailure(data);
 		}
