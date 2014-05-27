@@ -24,11 +24,10 @@ function handleResult(res, onSuccess, onFailure){
 			onFailure(e);
 		}
 
-		if(result.code === 400){
+		if(res.code === 400){
 			onFailure(data);
 		}
 		else{
-			console.log(data);
 			onSuccess(result);
 		}
 	});
