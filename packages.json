@@ -1,0 +1,12 @@
+{
+  "name": "volunteers",
+  "version": "0.0.1",
+  "description": "Basic volunteer administration application",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "~1.0.x",
+    "express": "~4.x"
+  },
+  "author": "Erwin Berends",
+  "license": "MIT"
+}
