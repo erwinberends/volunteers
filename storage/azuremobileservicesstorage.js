@@ -1,11 +1,10 @@
+var config = require('../configuration');
 var https = require('https');
 
-var applicationKey = 'aqvTfJISTYrMBsmTwAWisPBZelqKLC24';
-var baseUrl = 'vrijwilligersadministratie.azure-mobile.net';
 
 function createOptions(headers, method, path){
 	var options = {
-    	host : baseUrl,
+    	host : config.settings.azure.baseurl,
     	path : path,
     	method : method,
     	headers :  headers
@@ -39,7 +38,7 @@ exports.createVolunteer = function createVolunteer(volunteer, onSuccess, onFailu
 	var headers = {
   		'Content-Type': 'application/json',
   		'Content-Length': volunteerString.length,
-  		'X-ZUMO-APPLICATION' : applicationKey
+  		'X-ZUMO-APPLICATION' : config.settings.azure.apikey
 	};
 
 	var options = createOptions(headers, 'POST', '/tables/volunteer');
@@ -64,7 +63,7 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
 	var headers = {
   		'Content-Type': 'application/json',
   		'Content-Length': volunteerString.length,
-  		'X-ZUMO-APPLICATION' : applicationKey
+  		'X-ZUMO-APPLICATION' : config.settings.azure.apikey
 	};
 
 	var options = createOptions(headers, 'PATCH', '/tables/volunteer/' + volunteer.id);
@@ -83,7 +82,7 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
 
 exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailure){
 	var headers = {
-  		'X-ZUMO-APPLICATION' : applicationKey
+  		'X-ZUMO-APPLICATION' : apikey
 	};
 
 	var options = createOptions(headers, 'DELETE', '/tables/volunteer/' + volunteer.id)
@@ -106,8 +105,9 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
 }
 
 exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
-	var headers = {'X-ZUMO-APPLICATION' : applicationKey};
-
+	console.log(config);
+	var headers = {'X-ZUMO-APPLICATION' : config.settings.azure.apikey};
+	console.log('called');
 	var options = createOptions(headers, 'GET', '/api/volunteers');
 
 	var req = https.request(options, function(res) {
@@ -121,7 +121,7 @@ exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
 }
 
 exports.loadAllTags = function loadAllTags(onSuccess, onFailure){
-	var headers = {'X-ZUMO-APPLICATION' : applicationKey};
+	var headers = {'X-ZUMO-APPLICATION' : config.settings.azure.apikey};
 
 	var options = createOptions(headers, 'GET', '/tables/tag');
 
@@ -144,7 +144,7 @@ exports.addTag = function addTag(volunteerTag, onSuccess, onFailure){
 	var headers = {
   		'Content-Type': 'application/json',
   		'Content-Length': volunteerTagString.length,
-  		'X-ZUMO-APPLICATION' : applicationKey
+  		'X-ZUMO-APPLICATION' : config.settings.azure.apikey
 	};
 
 	var options = createOptions(headers, 'POST', '/tables/volunteertag');
@@ -163,7 +163,7 @@ exports.addTag = function addTag(volunteerTag, onSuccess, onFailure){
 
 exports.removeTag = function deleteVolunteer(query, onSuccess, onFailure){
 	var headers = {
-  		'X-ZUMO-APPLICATION' : applicationKey
+  		'X-ZUMO-APPLICATION' : config.settings.azure.apikey
 	};
 
 	var options = createOptions(headers, 'DELETE', '/api/volunteertag?volunteerid=' + query.volunteerid + '&tagid=' + query.tagid)
