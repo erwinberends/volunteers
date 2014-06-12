@@ -32,5 +32,9 @@ node_modules
 #bowwer elements
 /bower_components
 
-configuration/development.js
-configuration/production.js
+#configuration files
+/configuration/development.js
+/configuration/production.js
+
+#compiled stylesheets
+/assets/stylesheets/*.css
