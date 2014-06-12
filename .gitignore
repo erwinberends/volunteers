@@ -29,5 +29,8 @@ node_modules
 /node_modules
 /node_modules
 
+#bowwer elements
+/bower_components
+
 configuration/development.js
 configuration/production.js
