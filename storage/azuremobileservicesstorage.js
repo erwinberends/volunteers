@@ -82,7 +82,7 @@ exports.updateVolunteer = function updateVolunteer(volunteer, onSuccess, onFailu
 
 exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailure){
 	var headers = {
-  		'X-ZUMO-APPLICATION' : apikey
+  		'X-ZUMO-APPLICATION' : config.settings.azure.apikey
 	};
 
 	var options = createOptions(headers, 'DELETE', '/tables/volunteer/' + volunteer.id)
@@ -105,9 +105,7 @@ exports.deleteVolunteer = function deleteVolunteer(volunteer, onSuccess, onFailu
 }
 
 exports.loadAllVolunteers = function loadAllVolunteers(onSuccess, onFailure){
-	console.log(config);
 	var headers = {'X-ZUMO-APPLICATION' : config.settings.azure.apikey};
-	console.log('called');
 	var options = createOptions(headers, 'GET', '/api/volunteers');
 
 	var req = https.request(options, function(res) {
@@ -173,7 +171,6 @@ exports.removeTag = function deleteVolunteer(query, onSuccess, onFailure){
 
 	    // This never happens
 	    res.on('end', function(){
-	        console.log("End received!");
 	        onSuccess();
 	    });
 	});
