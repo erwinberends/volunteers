@@ -13,6 +13,10 @@ app.get('/js/*',function(req,res){
   res.sendfile(__dirname + req.path);
 });
 
+app.get('/assets/*',function(req,res){
+  res.sendfile(__dirname + req.path);
+});
+
 app.get('/api/volunteers', function(req, res){
 		storage.loadAllVolunteers(function(volunteers){
 		res.json(volunteers);	

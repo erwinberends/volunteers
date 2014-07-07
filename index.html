@@ -3,20 +3,22 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="js/vendor/angular.min.js"></script>
 	<script src="js/controller.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
 </head>
 <body ng-controller="VolunteerController">
 	<article>
-	<h1>Volunteers</h1>
-	<ul>
-		<li ng-repeat="volunteer in volunteers">
-	      	{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)">Edit</a> - <a ng-click="deleteVolunteer(volunteer)">Delete</a>
-    		Tags: 
-			<div ng-repeat="tag in volunteer.tags" style="background-color: {{tag.color}}">
-    			<span>{{tag.name}}</span><span ng-click="removeTag(tag, volunteer)">X</span>
+	<h1>Volunteers by name</h1>
+	<ul id="volunteerlist">
+		<li ng-repeat="volunteer in volunteers" class="volunteeritem">
+			<div class="volunteerinfo">
+	      		{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)" class="pointer">Edit</a> - <a ng-click="deleteVolunteer(volunteer)" class="pointer">Delete</a>
+	      	</div>
+			<div ng-repeat="tag in volunteer.tags" class="ovaltag pointer" ng-style="{ 'background-color': hover ? 'grey' : tag.color}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span ng-click="removeTag(tag, volunteer)" ng-style="{ 'color': hover ? 'black' : ''}">{{tag.name}}</span>
     		</div>
-			<a ng-click="showTags = !showTags">Add tags</a>
+			<a ng-click="showTags = !showTags" class="pointer">Add tags</a>
 			<ul ng-show="showTags">
-				<li ng-repeat="tag in tags" ng-click="addTag(tag, volunteer)">{{tag.name}}</li>
+				<li ng-repeat="tag in tags" ng-click="addTag(tag, volunteer)" class="tagtoadd pointer">{{tag.name}}</li>
 			</ul>
     	</li>
 	</ul>
