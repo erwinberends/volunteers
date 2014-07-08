@@ -80,8 +80,9 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
             else{
                 volunteer.tags.push(tag);
             }
+            addVolunteersToTag();
         });
-        addVolunteersToTag();
+        
     }
 
     $scope.removeTag = function(tag, volunteer){
@@ -93,9 +94,10 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
             var index = volunteer.tags.indexOf(tag);
             if (index > -1) {
                 volunteer.tags.splice(index, 1);
+                addVolunteersToTag();
             }
         });
-        addVolunteersToTag();
+        
     }
 
     $scope.editVolunteer = function(volunteer){
