@@ -1,0 +1,13 @@
+<h1>Tags</h1>
+	<ul id="volunteerlist">
+		<li ng-repeat="tag in tags" class="tagitem">
+			<div class="taginfo">
+	      		<div ng-style="{ 'background-color': tag.color}">{{tag.name}}</div>
+	      		<ul>
+	      			<li ng-repeat="volunteer in tag.volunteers">
+	      				{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}}
+	      			</li>
+	      		</ul>
+	      	</div>
+    	</li>
+	</ul>

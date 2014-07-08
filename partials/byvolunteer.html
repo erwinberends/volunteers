@@ -1,0 +1,20 @@
+<article>
+	<h1>Vrijwilligers</h1>
+	<ul id="volunteerlist">
+		<li ng-repeat="volunteer in volunteers" class="volunteeritem">
+			<div class="volunteerinfo">
+	      		{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)" class="pointer">Edit</a> - <a ng-click="deleteVolunteer(volunteer)" class="pointer">Delete</a>
+	      	</div>
+			<div ng-repeat="tag in volunteer.tags" class="ovaltag pointer" ng-style="{ 'background-color': hover ? 'grey' : tag.color}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+				<span ng-click="removeTag(tag, volunteer)" ng-style="{ 'color': hover ? 'black' : ''}">{{tag.name}}</span>
+    		</div>
+    		<div style="clear:both;"></div>
+			<a ng-click="showTags = !showTags" class="pointer">Tag toevoegen</a>
+			<ul class="tagstoadd" ng-show="showTags">
+				<li ng-repeat="tag in tags" ng-click="addTag(tag, volunteer); " class="tagtoadd pointer">
+					<div class="ovaltag" ng-style="{ 'background-color': tag.color}">{{tag.name}} </div>
+				</li>
+			</ul>
+    	</li>
+	</ul>
+</article>

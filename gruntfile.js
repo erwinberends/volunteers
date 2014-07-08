@@ -11,8 +11,9 @@ module.exports = function(grunt) {
     },
     copy: {
       main: {
-        src: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
-        dest: 'js/bootstrap.min.js'
+        files: [ 
+            { expand: true, src: ['bower_components/**/*.min.js', 'node_modules/underscore/underscore-min.js'], dest: 'js/', flatten: true },
+        ]
       }
     }
   });

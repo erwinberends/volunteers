@@ -38,4 +38,4 @@ node_modules
 
 #compiled stylesheets
 /assets/stylesheets/*.css
-js/bootstrap.min.js
+js/*min.js

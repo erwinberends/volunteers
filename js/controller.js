@@ -1,15 +1,51 @@
-var volunteerapp = angular.module('volunteerapp', []);
+var volunteerapp = angular.module('volunteerapp', ['ngRoute']);
+
+volunteerapp.config(function($routeProvider, $locationProvider) {
+    $routeProvider
+      .when('/ByTag', {
+        templateUrl: 'partials/bytag.html',
+      }
+    )
+      .when('/ByVolunteer', {
+        templateUrl: 'partials/byvolunteer.html',
+    })
+      .otherwise({
+        redirectTo: '/ByVolunteer'
+      });;
+  });
+
 
 volunteerapp.controller('VolunteerController', function ($scope, $http) {
+    var volunteersLoaded = false;
+    var tagsLoaded = false;
 	$http.get('api/volunteers')
 		.success(function(data){
         	$scope.volunteers = data;
+            volunteersLoaded = true;
+            addVolunteersToTag();
+
     	});
     $http.get('api/tags')
         .success(function(data){
             $scope.tags = data;
+            tagsLoaded = true;
+            addVolunteersToTag();
         });
 
+    function addVolunteersToTag(){
+        if(volunteersLoaded && tagsLoaded){
+            _.each($scope.tags, function(tag){
+                tag.volunteers = new Array();
+                _.each($scope.volunteers, function(volunteer){
+                    _.each(volunteer.tags, function(volunteertag){
+                        if(tag.id === volunteertag.id){
+                            tag.volunteers.push(volunteer);
+                        }
+                    });
+                });
+            });
+        }
+    }
 
     $scope.save = function() {
         if($scope.volunteer.id === undefined){
@@ -45,6 +81,7 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
                 volunteer.tags.push(tag);
             }
         });
+        addVolunteersToTag();
     }
 
     $scope.removeTag = function(tag, volunteer){
@@ -58,6 +95,7 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
                 volunteer.tags.splice(index, 1);
             }
         });
+        addVolunteersToTag();
     }
 
     $scope.editVolunteer = function(volunteer){

@@ -1,10 +1,12 @@
 <!DOCTYPE html5>
 <html ng-app="volunteerapp">
 <head>
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="js/vendor/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
 	<script src="js/controller.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/underscore-min.js"></script>
 	<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
 </head>
 <body ng-controller="VolunteerController">
@@ -16,8 +18,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vrijwilligers <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="ByName">Op naam</a></li>
-            <li><a href="ByTag">Op tag</a></li>
+            <li><a href="#/ByName">Op naam</a></li>
+            <li><a href="#/ByTag">Op tag</a></li>
           </ul>
         </li>
         <li class="active"><a href="#">Exporteer</a></li>
@@ -27,28 +29,7 @@
 </nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6">
-				<article>
-				<h1>Vrijwilligers</h1>
-				<ul id="volunteerlist">
-					<li ng-repeat="volunteer in volunteers" class="volunteeritem">
-						<div class="volunteerinfo">
-				      		{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)" class="pointer">Edit</a> - <a ng-click="deleteVolunteer(volunteer)" class="pointer">Delete</a>
-				      	</div>
-						<div ng-repeat="tag in volunteer.tags" class="ovaltag pointer" ng-style="{ 'background-color': hover ? 'grey' : tag.color}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-							<span ng-click="removeTag(tag, volunteer)" ng-style="{ 'color': hover ? 'black' : ''}">{{tag.name}}</span>
-			    		</div>
-			    		<div style="clear:both;"></div>
-						<a ng-click="showTags = !showTags" class="pointer">Tag toevoegen</a>
-						<ul class="tagstoadd" ng-show="showTags">
-							<li ng-repeat="tag in tags" ng-click="addTag(tag, volunteer); " class="tagtoadd pointer">
-								<div class="ovaltag" ng-style="{ 'background-color': tag.color}">{{tag.name}} </div>
-							</li>
-						</ul>
-			    	</li>
-				</ul>
-				</article>
-			</div>
+			<div class="col-md-6" ng-view></div>
 			<div class="col-md-6">
 				<article>
 					<h1>Toevoegen</h1>

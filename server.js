@@ -9,12 +9,12 @@ app.get('/', function(req, res){
   res.sendfile(__dirname + '/index.html');
 });
 
-app.get('/byname', function(req, res){
-  res.sendfile(__dirname + '/index.html');
+app.get('/partials/byvolunteer.html', function(req, res){
+  res.sendfile(__dirname + '/partials/byvolunteer.html');
 });
 
-app.get('/bytag', function(req, res){
-  res.sendfile(__dirname + '/index.html');
+app.get('/partials/bytag.html', function(req, res){
+  res.sendfile(__dirname + '/partials/bytag.html');
 });
 
 app.get('/js/*',function(req,res){
