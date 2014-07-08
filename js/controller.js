@@ -2,16 +2,15 @@ var volunteerapp = angular.module('volunteerapp', ['ngRoute']);
 
 volunteerapp.config(function($routeProvider, $locationProvider) {
     $routeProvider
-      .when('/ByTag', {
-        templateUrl: 'partials/bytag.html',
-      }
-    )
-      .when('/ByVolunteer', {
-        templateUrl: 'partials/byvolunteer.html',
-    })
-      .otherwise({
-        redirectTo: '/ByVolunteer'
-      });;
+        .when('/ByTag', {
+            templateUrl: 'partials/bytag.html',
+        })
+        .when('/ByName', {
+            templateUrl: 'partials/byname.html',
+        })
+        .when('/', {
+            templateUrl: 'partials/byvolunteer.html',
+        });
   });
 
 

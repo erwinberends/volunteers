@@ -9,8 +9,8 @@ app.get('/', function(req, res){
   res.sendfile(__dirname + '/index.html');
 });
 
-app.get('/partials/byvolunteer.html', function(req, res){
-  res.sendfile(__dirname + '/partials/byvolunteer.html');
+app.get('/partials/byname.html', function(req, res){
+  res.sendfile(__dirname + '/partials/byname.html');
 });
 
 app.get('/partials/bytag.html', function(req, res){
