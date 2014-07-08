@@ -8,7 +8,14 @@ module.exports = function(grunt) {
           "assets/stylesheets/style.css": "assets/stylesheets/style.less"
         }
       }
+    },
+    copy: {
+      main: {
+        src: 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        dest: 'js/bootstrap.min.js'
+      }
     }
   });
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 };

@@ -9,6 +9,14 @@ app.get('/', function(req, res){
   res.sendfile(__dirname + '/index.html');
 });
 
+app.get('/byname', function(req, res){
+  res.sendfile(__dirname + '/index.html');
+});
+
+app.get('/bytag', function(req, res){
+  res.sendfile(__dirname + '/index.html');
+});
+
 app.get('/js/*',function(req,res){
   res.sendfile(__dirname + req.path);
 });
