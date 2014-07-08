@@ -23,7 +23,7 @@ function handleResult(res, onSuccess, onFailure){
 			onFailure(e);
 		}
 
-		if(result.code === 400){
+		if(result && result.code === 400){
 			console.log('Error occured, status 400');
 			onFailure(data);
 		}

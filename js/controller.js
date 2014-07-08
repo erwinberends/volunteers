@@ -38,7 +38,12 @@ volunteerapp.controller('VolunteerController', function ($scope, $http) {
         volunteertag.tagid = tag.id;
         $http.post('api/volunteer/addtag', JSON.stringify(volunteertag))
         .success(function(data){
-            volunteer.tags.push(tag);
+            if(!volunteer.tags){
+                volunteer.tags = [tag]; 
+            }
+            else{
+                volunteer.tags.push(tag);
+            }
         });
     }
 
