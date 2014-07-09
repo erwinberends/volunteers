@@ -18,7 +18,8 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
     
     var volunteersLoaded = false;
     var tagsLoaded = false;
-
+    
+    $scope.errorLoadingData = false;
     $scope.volunteers = getVolunteers();
     $scope.tags = getTags();
 
@@ -29,8 +30,10 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
             $scope.volunteers = data;
             volunteersLoaded = true;
             addVolunteersToTag();
+        })
+        .error(function(){
+            $scope.errorLoadingData = true;
         });
-
     }
 
     function getTags(){
@@ -39,6 +42,9 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
             $scope.tags = data;
             tagsLoaded = true;
             addVolunteersToTag();
+        })
+        .error(function(){
+            $scope.errorLoadingData = true;
         });
     }
 	

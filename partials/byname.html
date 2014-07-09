@@ -1,6 +1,9 @@
 <article>
 	<h1>Vrijwilligers</h1>
-	<div ng-show="!volunteers || !tags" class="waiting">Please wait while data is loaded</div>
+	<div ng-show="!volunteers || !tags" class="waiting">
+		<span ng-show="!errorLoadingData">Please wait while data is loaded</span>
+		<span ng-show="errorLoadingData">Error while loading data, please reload the page</span>
+	</div>
 	<ul	id="volunteerlist" ng-show="volunteers && tags">
 		<li ng-repeat="volunteer in volunteers" class="volunteeritem">
 			<div class="volunteerinfo">
