@@ -1,6 +1,7 @@
 <article>
 	<h1>Vrijwilligers</h1>
-	<ul id="volunteerlist">
+	<div ng-show="!volunteers || !tags" class="waiting">Please wait while data is loaded</div>
+	<ul	id="volunteerlist" ng-show="volunteers && tags">
 		<li ng-repeat="volunteer in volunteers" class="volunteeritem">
 			<div class="volunteerinfo">
 	      		{{volunteer.firstname}} {{volunteer.lastname}} - {{volunteer.email}} - <a data-toggle="edit" ng-click="editVolunteer(volunteer)" class="pointer">Edit</a> - <a ng-click="deleteVolunteer(volunteer)" class="pointer">Delete</a>

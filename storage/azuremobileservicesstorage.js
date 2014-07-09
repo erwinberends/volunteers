@@ -19,6 +19,7 @@ function handleResult(res, onSuccess, onFailure){
 			var result = JSON.parse(data);
 		}
 		catch(e){
+			console.log(data);
 			console.log(e);
 			onFailure(e);
 		}

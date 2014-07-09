@@ -9,28 +9,39 @@ volunteerapp.config(function($routeProvider, $locationProvider) {
             templateUrl: 'partials/byname.html',
         })
         .when('/', {
-            templateUrl: 'partials/byvolunteer.html',
+            templateUrl: 'partials/byname.html',
         });
   });
 
 
-volunteerapp.controller('VolunteerController', function ($scope, $http) {
+volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
+    
     var volunteersLoaded = false;
     var tagsLoaded = false;
-	$http.get('api/volunteers')
-		.success(function(data){
-        	$scope.volunteers = data;
+
+    $scope.volunteers = getVolunteers();
+    $scope.tags = getTags();
+
+
+    function getVolunteers(){
+        $http.get('api/volunteers')
+        .success(function(data){
+            $scope.volunteers = data;
             volunteersLoaded = true;
             addVolunteersToTag();
+        });
 
-    	});
-    $http.get('api/tags')
+    }
+
+    function getTags(){
+        $http.get('api/tags')
         .success(function(data){
             $scope.tags = data;
             tagsLoaded = true;
             addVolunteersToTag();
         });
-
+    }
+	
     function addVolunteersToTag(){
         if(volunteersLoaded && tagsLoaded){
             _.each($scope.tags, function(tag){
