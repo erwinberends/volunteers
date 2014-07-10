@@ -27,6 +27,10 @@
   </div><!-- /.container-fluid -->
 </nav>
 	<div class="container">
+		<div class="alert alert-danger alert-error" ng-show="$root.errorOccured">
+        	<a href="#" class="close" ng-click="$root.dismissError();">&times;</a>
+        	<span ng-show="errorMessage != ''">{{errorMessage}}</span>
+    	</div>
 		<div class="row">
 			<div class="col-md-6" ng-view></div>
 			<div class="col-md-6">

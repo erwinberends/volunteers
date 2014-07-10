@@ -13,16 +13,52 @@ volunteerapp.config(function($routeProvider, $locationProvider) {
         });
   });
 
+volunteerapp.factory("errors", function($rootScope){
+    return {
+        catch: function(message){
+            return function(reason){
+                $rootScope.showError(message);
+            };
+        }
+    };
+});
 
-volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
+volunteerapp.config(function($provide){
+    $provide.decorator("$exceptionHandler", function($delegate, $injector){
+        return function(exception, cause){
+            var $rootScope = $injector.get("$rootScope");
+            $rootScope.showError(exception.toString());
+            $delegate(exception, cause);
+        };
+    });
+});
+
+volunteerapp.run(function($rootScope) {
+       
+    $rootScope.errorOccured = false;
+    $rootScope.errorMessage = '';
+
+    $rootScope.showError = function(message){
+        $rootScope.errorOccured = true;
+        $rootScope.errorMessage = message;
+    }
+
+    $rootScope.dismissError = function(){
+        $rootScope.errorOccured = false;
+        $rootScope.errorMessage = '';
+    }
+});
+
+
+
+
+volunteerapp.controller('VolunteerController', function ($q, $scope, $http, errors) {
     
     var volunteersLoaded = false;
     var tagsLoaded = false;
     
-    $scope.errorLoadingData = false;
     $scope.volunteers = getVolunteers();
     $scope.tags = getTags();
-
 
     function getVolunteers(){
         $http.get('api/volunteers')
@@ -31,9 +67,7 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
             volunteersLoaded = true;
             addVolunteersToTag();
         })
-        .error(function(){
-            $scope.errorLoadingData = true;
-        });
+        .catch(errors.catch('Error occured while loading volunteers'));
     }
 
     function getTags(){
@@ -43,9 +77,7 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
             tagsLoaded = true;
             addVolunteersToTag();
         })
-        .error(function(){
-            $scope.errorLoadingData = true;
-        });
+        .catch(errors.catch('Error occured while loading tags'));
     }
 	
     function addVolunteersToTag(){
@@ -71,15 +103,14 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
         		$scope.volunteers.push($scope.volunteer);
         		$scope.volunteer = null;
         	})
-            .error(function(data){
-                alert('Error while saving volunteer');
-            });
+            .catch(errors.catch('Error while saving volunteer'));
         }
         else{
             $http.post('api/volunteer/update', JSON.stringify($scope.volunteer))
             .success(function(data){
                 $scope.volunteer = null;
-            });
+            })
+            .catch(errors.catch('Error while saving volunteer'));
         }
 
     };
@@ -97,7 +128,8 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
                 volunteer.tags.push(tag);
             }
             addVolunteersToTag();
-        });
+        })
+        .catch(errors.catch('Error while adding tag, tags can be added once'));
         
     }
 
@@ -112,8 +144,8 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
                 volunteer.tags.splice(index, 1);
                 addVolunteersToTag();
             }
-        });
-        
+        })
+        .catch(errors.catch('Error while adding tag, tags can be added once'));
     }
 
     $scope.editVolunteer = function(volunteer){
@@ -126,8 +158,11 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http) {
             var index=$scope.volunteers.indexOf(volunteer);
             $scope.volunteers.splice(index,1);     
         })
-        .error(function(data){
-                alert('Error while deleting volunteer');
-        });
+        .catch(errors.catch('Error while adding tag, tags can be added once'));
+    }
+
+    $scope.dismissError = function(){
+        $scope.errorOccured = false;
+        $scope.errorMessage = '';
     }
 });

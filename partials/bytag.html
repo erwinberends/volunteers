@@ -1,7 +1,6 @@
 <h1>Tags</h1>
 <div ng-show="!volunteers || !tags" class="waiting">
 	<span ng-show="!errorLoadingData">Please wait while data is loaded</span>
-	<span ng-show="errorLoadingData">Error while loading data, please reload the page</span>
 </div>
 <ul id="volunteerlist" ng-show="volunteers && tags">
 	<li ng-repeat="tag in tags" class="tagitem">
