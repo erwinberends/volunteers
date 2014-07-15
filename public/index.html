@@ -1,0 +1,59 @@
+<!DOCTYPE html5>
+<html ng-app="volunteerapp">
+<head>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/angular-route.min.js"></script>
+	<script src="js/controller.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/underscore-min.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css">
+</head>
+<body ng-controller="VolunteerController">
+	<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" href="javacript:void(0);" data-toggle="dropdown">Vrijwilligers <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#/ByName">Op naam</a></li>
+            <li><a href="#/ByTag">Op tag</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+	<div class="container">
+		<div class="alert alert-danger alert-error" ng-show="$root.errorOccured">
+        	<a href="#" class="close" ng-click="$root.dismissError();">&times;</a>
+        	<span ng-show="errorMessage != ''">{{errorMessage}}</span>
+    	</div>
+		<div class="row">
+			<div class="col-md-6" ng-view></div>
+			<div class="col-md-6">
+				<article>
+					<h1>Toevoegen</h1>
+					<form novalidate class="simple-form" name="volunteerform" role="form">
+						<div class="form-group">
+							<label for="firstname">Voornaam</label>
+			    			<input id="firstname" class="form-control" type="text" ng-model="volunteer.firstname" required/><br />
+			    		</div>
+			    		<div class="form-group">
+			    			<label for="lastname">Achternaam</label>
+			    			<input id="lastname" class="form-control" type="text" ng-model="volunteer.lastname" required/><br />
+			    		</div>
+			    		<div class="form-group">
+			    			<label for="email">e-mail</label>
+			    			<input id="email" class="form-control" type="email" ng-model="volunteer.email" required/><br />
+			    		</div>
+			    		<button ng-click="save()" ng-disabled="volunteerform.$invalid">Save</button>
+			  		</form>
+				</article>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

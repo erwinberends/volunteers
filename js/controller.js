@@ -49,9 +49,6 @@ volunteerapp.run(function($rootScope) {
     }
 });
 
-
-
-
 volunteerapp.controller('VolunteerController', function ($q, $scope, $http, errors) {
     
     var volunteersLoaded = false;
@@ -145,7 +142,7 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http, erro
                 addVolunteersToTag();
             }
         })
-        .catch(errors.catch('Error while adding tag, tags can be added once'));
+        .catch(errors.catch('Error while removing tag'));
     }
 
     $scope.editVolunteer = function(volunteer){
@@ -158,7 +155,7 @@ volunteerapp.controller('VolunteerController', function ($q, $scope, $http, erro
             var index=$scope.volunteers.indexOf(volunteer);
             $scope.volunteers.splice(index,1);     
         })
-        .catch(errors.catch('Error while adding tag, tags can be added once'));
+        .catch(errors.catch('Error while deleting volunteer, please remove tags first'));
     }
 
     $scope.dismissError = function(){

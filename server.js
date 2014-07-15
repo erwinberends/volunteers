@@ -5,24 +5,15 @@ var app = express();
 
 app.use(bodyParser.json());
 
+// Serve static files
+app.use('/partials', express.static('partials'));
+app.use('/', express.static('public'));
+app.use('/assets/stylesheets', express.static('assets/stylesheets'));
+app.use('/js', express.static('js'));
+
+
 app.get('/', function(req, res){
   res.sendfile(__dirname + '/index.html');
-});
-
-app.get('/partials/byname.html', function(req, res){
-  res.sendfile(__dirname + '/partials/byname.html');
-});
-
-app.get('/partials/bytag.html', function(req, res){
-  res.sendfile(__dirname + '/partials/bytag.html');
-});
-
-app.get('/js/*',function(req,res){
-  res.sendfile(__dirname + req.path);
-});
-
-app.get('/assets/*',function(req,res){
-  res.sendfile(__dirname + req.path);
 });
 
 app.get('/api/volunteers', function(req, res){
